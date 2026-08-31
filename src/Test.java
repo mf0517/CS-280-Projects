@@ -28,7 +28,7 @@ public class Test {
 
     private static boolean runTests(String[] args) {
         // Test sorting algorithms.
-        
+        bubblesort.main(args);
         /* Call additional main routines here as you create new sorting algorithms. */
         
         // Test data structures.
