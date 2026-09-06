@@ -4,7 +4,7 @@ package assignments.sorting;
  * 
  * Swap adjecent elements over and over until the whole array is sorted
  */
-public class bubblesort extends SortingAlgorithm {
+public class bubblesort extends SortingAlgorithm<Integer> {
     /**
      * Sort an array in-place using bubble sort.
      * 
@@ -20,7 +20,7 @@ public class bubblesort extends SortingAlgorithm {
         {
             for(int i = 0; i < k-1; i++)  // go to K-1 because we don't need to compare the last index against its neighbor
             {
-                if(array[i] > array[i+1])
+                if(array[i].compareTo(array[i+1]) > 0)
                 {
                     // swap adjacentitems (i and i+1)
                 swap(array, i, i+1);
@@ -68,7 +68,7 @@ public class bubblesort extends SortingAlgorithm {
 
         // measuring runtime.
 
-        SortingAlgorithm sorter = new bubblesort();
+        SortingAlgorithm<Integer> sorter = new bubblesort();
 
         long start = System.nanoTime();
 
