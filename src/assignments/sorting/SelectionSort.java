@@ -5,7 +5,7 @@ package assignments.sorting;
  * Picking out the smallest element one-by-one
  * 
  */
-public class SelectionSort extends SortingAlgorithm<Integer> {
+public class SelectionSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     /**
      * 
      * sorting an array using Selection sorting.
@@ -17,7 +17,7 @@ public class SelectionSort extends SortingAlgorithm<Integer> {
      * 
      * 
      */
-    public void sort(Integer[] array)
+    public void sort(T[] array)
     {
         for(int k = 0; k < array.length-1 ;k++)
         {
@@ -35,12 +35,16 @@ public class SelectionSort extends SortingAlgorithm<Integer> {
     }
 
     /**
-     * creating a method that swaps the smallest number to the left
-     */
+    * creating a method that swaps the smallest number to the left
+    * creating a private method that changes around the order to ensure that the array is sorted correctly.
+    * @param array the array to swap values
+    * @param i the first index to swap
+    * @param l the second index to swap
+    */
 
-    private void check(Integer[] array, int i, int small)
+    private void check(T[] array, int i, int small)
     {
-        Integer temp = array[small];
+        T temp = array[small];
         array [small] = array[i];
         array[i] = temp;
         
@@ -49,7 +53,7 @@ public class SelectionSort extends SortingAlgorithm<Integer> {
     }
         public static void main(String[] args)
     {
-        SortingAlgorithm.validate(new SelectionSort());
+        SortingAlgorithm.validate(new SelectionSort<>());
         System.out.println("selection sort has passed all tests");
 
         
@@ -69,7 +73,7 @@ public class SelectionSort extends SortingAlgorithm<Integer> {
 
         // measuring runtime.
 
-        SortingAlgorithm<Integer> sorter = new SelectionSort();
+        SortingAlgorithm<Integer> sorter = new SelectionSort<>();
 
        // long start = System.nanoTime();
 

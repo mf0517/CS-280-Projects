@@ -4,7 +4,7 @@ package assignments.sorting;
  * 
  * Swap adjecent elements over and over until the whole array is sorted
  */
-public class bubblesort extends SortingAlgorithm<Integer> {
+public class BubbleSort <T extends Comparable<T>> extends SortingAlgorithm<T> {
     /**
      * Sort an array in-place using bubble sort.
      * 
@@ -14,7 +14,7 @@ public class bubblesort extends SortingAlgorithm<Integer> {
      * @param array an array of integers
      * 
      */
-    public void sort(Integer[] array)
+    public void sort(T[] array)
     {
         for(int k = array.length; k >= 2; k--)         // K is the length of the sub-array we are looping through in the inner loop
         {
@@ -23,7 +23,7 @@ public class bubblesort extends SortingAlgorithm<Integer> {
                 if(array[i].compareTo(array[i+1]) > 0)
                 {
                     // swap adjacentitems (i and i+1)
-                swap(array, i, i+1);
+                    swap(array, i, i+1);
 
                 }
             }
@@ -37,9 +37,9 @@ public class bubblesort extends SortingAlgorithm<Integer> {
      * @param j the second index to swap
      * 
      */
-    private void swap(Integer[] array, int i, int j)
+    private void swap(T[] array, int i, int j)
     {
-        Integer temp = array[i];
+        T temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
@@ -50,7 +50,7 @@ public class bubblesort extends SortingAlgorithm<Integer> {
      */
     public static void main(String[] args)
     {
-        SortingAlgorithm.validate(new bubblesort());
+        SortingAlgorithm.validate(new BubbleSort<>());
         System.out.println("bubble sort has passed all tests");
 
         
@@ -68,7 +68,7 @@ public class bubblesort extends SortingAlgorithm<Integer> {
 
         // measuring runtime.
 
-        SortingAlgorithm<Integer> sorter = new bubblesort();
+        SortingAlgorithm<Integer> sorter = new BubbleSort<>();
 
         long start = System.nanoTime();
 

@@ -5,7 +5,7 @@ package assignments.sorting;
 // 
 
 
-public class InsertionSort extends SortingAlgorithm<Integer> {
+public class InsertionSort<T extends Comparable<T>> extends SortingAlgorithm<T> {
     /**
      * Sort an array using Insertion
      * 
@@ -16,21 +16,19 @@ public class InsertionSort extends SortingAlgorithm<Integer> {
      * 
      * 
      */
-    public void sort(Integer[] array)
+    public void sort(T[] array)
     {
         /**
          * creating the for loops
          * 
          */
-        for(int s = 0; s < array.length-1; s++) 
+        for(int s = 1; s < array.length; s++) 
         {
-            int special = s;
-            for(int k = s+1; k < array.length; k++) // we are saying the arrays first element "s" is correctly sorted
+            int k = s;
+            while(k > 0 &&  array[k].compareTo(array[k-1]) < 0) //compares k and the value prior to it to see if k is smaller than its previous.1
             {
-                while(array[k].compareTo(array[special]) < 0)
-                {
-                    change(array,k,special);
-                }
+                change(array, k, k-1);
+                k--;
             }
         }
     }
@@ -38,20 +36,25 @@ public class InsertionSort extends SortingAlgorithm<Integer> {
 
         /**
          * creating a private method that changes around the order to ensure that the array is sorted correctly.
+         * @param array the array to swap values
+         * @param i the first index to swap
+         * @param l the second index to swap
          */
-        private void change(Integer[] array, int i, int l)
-        {
-            Integer temp = array[i];
-            array[i] = array[l];
-            array[l] = temp;
-        }
+    private void change(T[] array, int i, int l)
+    {
+        T temp = array[i];
+        array[i] = array[l];
+        array[l] = temp;
+    }
         /**
-         * making my main for insertion sort.
+         * Run validiation tests.
+        * @param args command-line args
          */
 
-            public static void main(String[] args)
+
+    public static void main(String[] args)
     {
-        SortingAlgorithm.validate(new InsertionSort());
+        SortingAlgorithm.validate(new InsertionSort<>());
         System.out.println("insertion sort has passed all tests");
 
         
@@ -71,7 +74,7 @@ public class InsertionSort extends SortingAlgorithm<Integer> {
 
         // measuring runtime.
 
-        SortingAlgorithm<Integer> sorter = new InsertionSort();
+        SortingAlgorithm<Integer> sorter = new InsertionSort<>();
 
        // long start = System.nanoTime();
 
