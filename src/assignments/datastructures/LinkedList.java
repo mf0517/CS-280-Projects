@@ -99,7 +99,7 @@ public class LinkedList<T> implements List<T> {
         }
         else
         {
-        Node cursor = head.link;
+        Node cursor = head;
 
         for( int i = 0; i < index - 1; i++)
         {
@@ -107,9 +107,8 @@ public class LinkedList<T> implements List<T> {
         }
         Node add = new Node(value, cursor.link);
         cursor.link = add;
-
-
         }
+        this.size++;
     }   
     
     /**
@@ -134,9 +133,11 @@ public class LinkedList<T> implements List<T> {
         {
            cursor = cursor.link;
         }
-        Node target = cursor.link;
-        deleted = target.data;
+            Node target = cursor.link;
+            deleted = target.data;
+            cursor.link = target.link;
         }
+        this.size--;
         return deleted;
 
     }
