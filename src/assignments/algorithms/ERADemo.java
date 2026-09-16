@@ -13,7 +13,7 @@ public class ERADemo {
     public static void main(String[] args)
     {
         InsertionSort<Integer> sorter = new InsertionSort<>();
-        for(int n = 10; n < 100; n+= 10)
+        for(int n = 10; n < 9999; n+= 10)
         {
             Integer[] array = randomArray(n);
             long start = System.nanoTime();

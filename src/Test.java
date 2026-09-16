@@ -28,7 +28,7 @@ public class Test {
 
     private static boolean runTests(String[] args) {
         // Test sorting algorithms.
-        bubblesort.main(args);
+        BubbleSort.main(args);
 
         SelectionSort.main(args);
 
@@ -37,6 +37,7 @@ public class Test {
         
         // Test data structures.
         KeyValuePair.main(args);
+        LinkedList.main(args);
         /* Call additional main routines as you create new data strutures. */
         Vector.main(args);
 
