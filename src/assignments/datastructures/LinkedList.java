@@ -1,5 +1,6 @@
 package assignments.datastructures;
 
+import java.util.Iterator;
 import adt.List;
 
 /// An extensible list backed by a chain of nodes.
@@ -14,10 +15,37 @@ import adt.List;
 ///  one must first traverse through the chain of nodes from the beginning of the list.
 /// 
 /// @param <T> the type of each element
-public class LinkedList<T> implements List<T> {
+public class LinkedList<T> implements List<T>, Iterable<T> {
     private Node head;
     private int size;
 
+
+    /**
+     * Creating an iterator method
+     */
+    public Iterator<T> iterator()
+    {
+        return new Iterator<T>()
+        {
+            Node cursor = head;
+            public boolean hasNext() 
+            {
+                if(cursor.link != null)
+                    {
+                        return true;
+                    }
+                return false;
+            }
+            public T next()
+            {
+                T temp = cursor.data;
+                cursor = cursor.link;
+                return temp;
+            }
+
+
+        };
+    }
     /**
      * Initialize an empty linked list.
      */
@@ -74,9 +102,10 @@ public class LinkedList<T> implements List<T> {
      */
     public boolean contains(T value) {
         // TODO implement this method
-        for( int i = 0; i < size; i++)
+        Node cursor = head;
+        while(cursor != null)
         {
-            if(at(i) == value)
+            if(cursor.data == value)
             {
                 return true;
             }

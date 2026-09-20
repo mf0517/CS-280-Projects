@@ -1,5 +1,9 @@
 package assignments.datastructures;
 
+import java.util.Iterator;
+
+import org.w3c.dom.Node;
+
 import adt.List;
 
 /// An extensible list backed by an array buffer.
@@ -13,7 +17,7 @@ import adt.List;
 /// This is a very expensive operation, so you want to make sure it occurs very infrequently.
 /// 
 /// @param <T> the type of each element
-public class Vector<T> implements List<T> {
+public class Vector<T> implements List<T>,Iterable<T> {
     /** The initial amount of buffer space in a newly-created vector. */
     public static final int INITIAL_BUFFER_SIZE = 10;
     private T[] array;
@@ -154,12 +158,46 @@ public class Vector<T> implements List<T> {
         this.array = newArray;
     }
 
+    public Iterator<T> iterator()
+    {
+        return new Iterator<T>()
+        {
+            int currentIndex = 0;
+            public boolean hasNext() 
+            {
+                if(currentIndex < size)
+                    {
+                        return true;
+                    }
+                return false;
+            }
+            public T next()
+            {
+                if(!hasNext())
+                {
+                    return null;
+                }
+                return array[currentIndex++];
+            }
+
+
+    };
+    }
+
     /**
      * Run validation tests.
      * @param args command-line args
      */
     public static void main(String[] args) {
         List.validate(new Vector<>());
+
+        // Test iterator.
+        Vector<Integer> vector = new Vector<>();
+        for (int i = 0; i < INITIAL_BUFFER_SIZE; i ++) vector.insert(0, i);
+        Iterator<Integer> iter = vector.iterator();
+        for (int i = INITIAL_BUFFER_SIZE; i > 0; i --) assert iter.next().equals(i-1);
+        assert !iter.hasNext();
+
         System.out.println("Vector passes all tests.");
     }
     
