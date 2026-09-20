@@ -6,46 +6,43 @@ import adt.List;
 /// An extensible list backed by a chain of nodes.
 /// 
 /// The idea here is to wrap each datum in a larger structure, a *node*,
-///  which also contains a pointer to the node containing the *next* element in the list.
+/// which also contains a pointer to the node containing the *next* element in the list.
 /// This structure permits efficient insertion and deletion,
-///  in the sense that it only requires rearranging pointers nearby where the change takes place.
+/// in the sense that it only requires rearranging pointers nearby where the change takes place.
 /// 
 /// However, this structure foregoes *random access*, i.e. easy access to arbitrary locations in the list.
 /// In order to make any changes to a location in the middle of the list,
-///  one must first traverse through the chain of nodes from the beginning of the list.
+/// one must first traverse through the chain of nodes from the beginning of the list.
 /// 
 /// @param <T> the type of each element
 public class LinkedList<T> implements List<T>, Iterable<T> {
     private Node head;
     private int size;
 
-
     /**
      * Creating an iterator method
      */
-    public Iterator<T> iterator()
-    {
-        return new Iterator<T>()
-        {
-            Node cursor = head;
-            public boolean hasNext() 
-            {
-                if(cursor.link != null)
-                    {
-                        return true;
-                    }
-                return false;
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Node cursor = head;
+
+            @Override
+            public boolean hasNext() {
+                return cursor != null;
             }
-            public T next()
-            {
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new java.util.NoSuchElementException();
+                }
                 T temp = cursor.data;
                 cursor = cursor.link;
                 return temp;
             }
-
-
         };
     }
+
     /**
      * Initialize an empty linked list.
      */
@@ -59,7 +56,6 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
      * @return the number of items
      */
     public int length() {
-        // TODO implement this method
         return size;
     }
     
@@ -71,11 +67,9 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
     public T at(int index) {
         assert 0 <= index && index < this.size;
         Node cursor = head;
-        for(int i = 0; i < index; i++)
-        {
+        for (int i = 0; i < index; i++) {
             cursor = cursor.link;
         }
-        // TODO implement this method
         return cursor.data;
     }
     
@@ -87,9 +81,7 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
     public void set(int index, T value) {
         assert 0 <= index && index < this.size;
         Node cursor = head;
-        // TODO implement this method
-        for(int i = 0; i < index; i++)
-        {
+        for (int i = 0; i < index; i++) {
             cursor = cursor.link;
         }
         cursor.data = value;
@@ -101,18 +93,15 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
      * @return true iff the collection contains value
      */
     public boolean contains(T value) {
-        // TODO implement this method
         Node cursor = head;
-        while(cursor != null)
-        {
-            if(cursor.data == value)
-            {
+        while (cursor != null) {
+            if (cursor.data == value || (value != null && value.equals(cursor.data))) {
                 return true;
             }
+            cursor = cursor.link; // Advances the cursor to avoid an infinite loop
         }
         return false;
     }
-
     
     /**
      * Insert an item into the list.
@@ -121,24 +110,18 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
      */
     public void insert(int index, T value) {
         assert 0 <= index && index <= this.size;
-        // TODO implement this method
-        if(index == 0)
-        {
-            head = new Node(value,head);
-        }
-        else
-        {
-        Node cursor = head;
-
-        for( int i = 0; i < index - 1; i++)
-        {
-            cursor = cursor.link;
-        }
-        Node add = new Node(value, cursor.link);
-        cursor.link = add;
+        if (index == 0) {
+            head = new Node(value, head);
+        } else {
+            Node cursor = head;
+            for (int i = 0; i < index - 1; i++) {
+                cursor = cursor.link;
+            }
+            Node add = new Node(value, cursor.link);
+            cursor.link = add;
         }
         this.size++;
-    }   
+    }
     
     /**
      * Remove an item from the list.
@@ -147,28 +130,21 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
      */
     public T delete(int index) {
         assert 0 <= index && index < this.size;
-        // TODO implement this method
         T deleted;
         Node cursor = head;
-        if( index == 0)
-        {
+        if (index == 0) {
             deleted = head.data;
             head = head.link;
-        }
-        else
-        {
-        
-        for(int i = 0; i < index - 1; i++)
-        {
-           cursor = cursor.link;
-        }
+        } else {
+            for (int i = 0; i < index - 1; i++) {
+                cursor = cursor.link;
+            }
             Node target = cursor.link;
             deleted = target.data;
             cursor.link = target.link;
         }
         this.size--;
         return deleted;
-
     }
 
     /**
