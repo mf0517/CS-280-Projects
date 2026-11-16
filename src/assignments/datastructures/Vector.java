@@ -2,9 +2,9 @@ package assignments.datastructures;
 
 import java.util.Iterator;
 
-import org.w3c.dom.Node;
 
 import adt.List;
+import adt.Stack;
 
 /// An extensible list backed by an array buffer.
 /// 
@@ -17,7 +17,7 @@ import adt.List;
 /// This is a very expensive operation, so you want to make sure it occurs very infrequently.
 /// 
 /// @param <T> the type of each element
-public class Vector<T> implements List<T>,Iterable<T> {
+public class Vector<T> implements List<T>,Iterable<T>,Stack<T> {
     /** The initial amount of buffer space in a newly-created vector. */
     public static final int INITIAL_BUFFER_SIZE = 10;
     private T[] array;
@@ -28,8 +28,6 @@ public class Vector<T> implements List<T>,Iterable<T> {
      */
     @SuppressWarnings("unchecked")
     public Vector() {
-        // Generic types (i.e. `T`) don't technically exist at runtime, so you have to allocate arrays generically and then cast them.
-        // This is normally bad practice and generates a warning, hence the @SuppressWarnings tag before the method.
         this.array = (T[])(new Object[INITIAL_BUFFER_SIZE]);
         this.size = 0;
     }
@@ -75,16 +73,24 @@ public class Vector<T> implements List<T>,Iterable<T> {
      * @return true iff the collection contains value
      */
     public boolean contains(T value) {
-        // TODO implement this method
-        for( int i = 0; i < array.length; i++)
-        {
-            if (array[i] == value)
-                {
-                    return true;
-                } 
-        
+        for (int i = 0; i < this.size; i++) {
+            if (array[i] == value) { // (Consider using Objects.equals(array[i], value) if comparing objects)
+                return true;
+            }
         }
-        return false;    
+        return false;
+    }
+
+    public int find(T value)
+    {
+        for(int i = 0; i < array.length; i++)
+        {
+            if(array[i] == value)
+            {
+                return i;
+            }
+        }
+        return 0;
     }
     
     /**
@@ -148,15 +154,38 @@ public class Vector<T> implements List<T>,Iterable<T> {
      */
     @SuppressWarnings("unchecked")
     private void resize(int newSize) {
-        // TODO implement this method. Take inspiration from the constructor implementation.
-        T[] newArray;
-        newArray = (T[])(new Object[newSize]);
-        for(int i = 0; i < array.length; i++)
-        {
+        T[] newArray = (T[])(new Object[newSize]);
+        for (int i = 0; i < this.size; i++) {
             newArray[i] = array[i];
         }
         this.array = newArray;
     }
+    /**    
+     * Implementing Stack
+     * 
+     */
+
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
+    // taking the last 
+    public T peek()
+    {
+        return array[this.length()-1];
+    }
+
+public T pop() {
+    return delete(this.length() - 1);
+}
+
+    public void push(T value) {
+        insert(this.length(), value);
+    }
+
+    /**
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
 
     public Iterator<T> iterator()
     {
@@ -190,13 +219,15 @@ public class Vector<T> implements List<T>,Iterable<T> {
      */
     public static void main(String[] args) {
         List.validate(new Vector<>());
-
+        Stack.validate(new Vector<>());
         // Test iterator.
         Vector<Integer> vector = new Vector<>();
         for (int i = 0; i < INITIAL_BUFFER_SIZE; i ++) vector.insert(0, i);
         Iterator<Integer> iter = vector.iterator();
         for (int i = INITIAL_BUFFER_SIZE; i > 0; i --) assert iter.next().equals(i-1);
         assert !iter.hasNext();
+
+        // Test stack
 
         System.out.println("Vector passes all tests.");
     }

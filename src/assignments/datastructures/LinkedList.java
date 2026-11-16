@@ -2,6 +2,7 @@ package assignments.datastructures;
 
 import java.util.Iterator;
 import adt.List;
+import adt.Stack;
 
 /// An extensible list backed by a chain of nodes.
 /// 
@@ -15,7 +16,7 @@ import adt.List;
 /// one must first traverse through the chain of nodes from the beginning of the list.
 /// 
 /// @param <T> the type of each element
-public class LinkedList<T> implements List<T>, Iterable<T> {
+public class LinkedList<T> implements List<T>, Iterable<T>, Stack<T> {
     private Node head;
     private int size;
 
@@ -26,12 +27,10 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
         return new Iterator<T>() {
             private Node cursor = head;
 
-            @Override
             public boolean hasNext() {
                 return cursor != null;
             }
 
-            @Override
             public T next() {
                 if (!hasNext()) {
                     throw new java.util.NoSuchElementException();
@@ -148,6 +147,51 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
     }
 
     /**
+     * Implementing Stack
+     * 
+     */
+
+    public boolean isEmpty()
+    {
+        if(head == null)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public T peek()
+    {
+        if(isEmpty())
+        {
+            return null;
+        }
+        return head.data;
+    }
+
+    public T pop()
+    {
+        if(isEmpty())
+        {
+            return null;
+        }
+
+        T cursor = head.data;
+        head = head.link;
+
+        this.size--;
+
+        return cursor;
+    }
+
+    public void push(T value)
+    {
+        head = new Node(value, head);
+        this.size++;
+    }
+
+
+    /**
      * An encapsulation of a value with a pointer, allowing us to chain to another value.
      */
     private class Node {
@@ -171,6 +215,16 @@ public class LinkedList<T> implements List<T>, Iterable<T> {
      */
     public static void main(String[] args) {
         List.validate(new LinkedList<>());
+        //Test iterator.
+        LinkedList<Integer> list = new LinkedList<>();
+        for(int i = 0; i < 5; i++)
+        {
+            Iterator<Integer> iter = list.iterator();
+            for(int j = 5; j > 0; j--)
+            {
+                assert !iter.hasNext();
+            }
+        }
         System.out.println("LinkedList passes all tests.");
     }
 }

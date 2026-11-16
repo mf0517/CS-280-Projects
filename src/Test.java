@@ -38,8 +38,22 @@ public class Test {
         // Test data structures.
         KeyValuePair.main(args);
         LinkedList.main(args);
+        CircularLinkedList.main(args);
+        BucketSort.main(args);
+        HeapSort.main(args);
+        QuickSort.main(args);
+        MergeSort.main(args);
+        TreeSort.main(args);
         /* Call additional main routines as you create new data strutures. */
         Vector.main(args);
+        VectorSet.main(args);
+        
+        PriorityDequeue.main(args);
+        PriorityEnqueuer.main(args);
+        MinHeap.main(args);
+        HashSet.main(args);
+        BinarySearchTree.main(args);
+        TreeSet.main(args);
 
         return true;
     }
