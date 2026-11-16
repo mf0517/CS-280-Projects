@@ -29,7 +29,7 @@ public class BinarySearchTree<T extends Comparable<T>> implements Tree<T> {
      * 
      * NOTE: You will remove this method once we've learned how to add.
      * 
-     * @param demo a specific sequence of numbers defined in the main method
+     * a specific sequence of numbers defined in the main method
     /**
      * Compute the number of items in this tree.
      * @return the number of items
